@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from typing import List
+from app.schemas.video import NestedVideoRead
 
 class AthleteBase(BaseModel):
     name: str
@@ -10,6 +12,7 @@ class AthleteCreate(AthleteBase):
 
 class AthleteRead(AthleteBase):
     id: int
+    videos: List[NestedVideoRead] = []
 
     class Config:
         orm_mode = True
