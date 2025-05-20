@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Docker
+*.log
+*.pid
+*.db
+*.sqlite3
+.env.docker
+
+# Alembic
+alembic/versions/
+
+# Angular
+node_modules/
+dist/
+.angular/
+
+# OS
+.DS_Store
+Thumbs.db
