@@ -3,16 +3,10 @@ from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app.models import Athlete
 from app.schemas.athlete import AthleteCreate, AthleteRead
+from app.database import get_db
 
 router = APIRouter(prefix="/athletes", tags=["Athletes"])
 
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.post("/", response_model=AthleteRead)
 def create_athlete(athlete: AthleteCreate, db: Session = Depends(get_db)):
