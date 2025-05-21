@@ -8,6 +8,7 @@ class VideoCreate(BaseModel):
 class NestedVideoRead(VideoCreate):
     id: int
     path: str
+    status: str
 
     class Config:
         orm_mode = True

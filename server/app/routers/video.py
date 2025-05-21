@@ -1,12 +1,12 @@
 import os
 import subprocess
-from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
+from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, BackgroundTasks
 from app.schemas.video import VideoRead
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from datetime import datetime
 from app.database import get_db
 from app.models import AthleteVideoTag, Video
-from sqlalchemy.orm import joinedload
+import time
 
 router = APIRouter(prefix="/videos", tags=["Videos"])
 
@@ -14,7 +14,7 @@ UPLOAD_DIR = "./videos"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/upload")
-def upload_video(file: UploadFile = File(...), db: Session = Depends(get_db)):
+def upload_video(background_tasks: BackgroundTasks, file: UploadFile = File(...), db: Session = Depends(get_db)):
 
     if file.content_type not in ["video/mp4", "video/quicktime"]:
         raise HTTPException(status_code=400, detail="Only mp4 and mov files allowed")
@@ -34,11 +34,14 @@ def upload_video(file: UploadFile = File(...), db: Session = Depends(get_db)):
         filename=file.filename,
         path=file_location,
         upload_date=datetime.utcnow(),
-        duration=duration
+        duration=duration,
+        status="Processing",
     )
     db.add(video)
     db.commit()
     db.refresh(video)
+
+    background_tasks.add_task(simulate_video_processing, video_id=video.id, db=db)
 
     return {
         "id": video.id,
@@ -74,3 +77,10 @@ def get_video_duration(path: str) -> float | None:
     except Exception as e:
         print(f"Error getting duration: {e}")
         return None
+    
+def simulate_video_processing(video_id: int, db: Session):
+    time.sleep(40)  # simulate processing time
+    video = db.query(Video).get(video_id)
+    if video:
+        video.status = "Complete"
+        db.commit()
