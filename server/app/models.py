@@ -22,6 +22,7 @@ class Video(Base):
     path = Column(String)
     upload_date = Column(DateTime)
     duration = Column(Float)
+    status = Column(String) 
 
     video_tags = relationship("AthleteVideoTag", back_populates="video")
 
