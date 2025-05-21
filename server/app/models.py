@@ -38,3 +38,14 @@ class AthleteVideoTag(Base):
     __table_args__ = (
         UniqueConstraint('athlete_id', 'video_id', name='uix_athlete_video'),
     )
+
+
+class AthleteVideoMetric(Base):
+    __tablename__ = "AthleteVideoMetric"
+
+    id = Column(Integer, primary_key=True, index=True)
+    athlete_id = Column(Integer, ForeignKey("Athlete.id"))
+    video_id = Column(Integer, ForeignKey("Video.id"))
+    metric_type = Column(String, nullable=False)
+    metric_value = Column(Float, nullable=False)
+    timestamp = Column(Float, nullable=False)
