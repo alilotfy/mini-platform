@@ -46,9 +46,7 @@ export class MetricsComponent implements OnInit {
     if (
       this.newMetric.athlete_id &&
       this.newMetric.video_id &&
-      this.newMetric.metric_type &&
-      this.newMetric.metric_value &&
-      this.newMetric.timestamp
+      this.newMetric.metric_type
     ) {
       this.metricService.addMetric(this.newMetric as Metric).subscribe(() => {
         this.loadData();

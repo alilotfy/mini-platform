@@ -33,6 +33,6 @@ export class VideoService {
   }
 
   tagAthlete(tag: any): Observable<Video> {
-    return this.http.post<Video>(this.tagAPiUrl+'upload', tag);
+    return this.http.post<Video>(this.tagAPiUrl, tag);
   }
 }
