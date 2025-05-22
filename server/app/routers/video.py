@@ -10,7 +10,7 @@ import time
 
 router = APIRouter(prefix="/videos", tags=["Videos"])
 
-UPLOAD_DIR = "./videos"
+UPLOAD_DIR = "./video_files"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/upload")
