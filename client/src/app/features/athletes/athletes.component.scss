@@ -73,3 +73,28 @@ form {
     }
   }
   
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+    max-width: 600px;
+  }
+  
+  li {
+    margin-bottom: 8px;
+  }
+  
+  .athlete-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #e0f0ff;
+    }
+  }
+  

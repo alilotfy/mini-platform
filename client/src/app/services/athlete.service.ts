@@ -14,10 +14,14 @@ export interface Athlete {
 })
 export class AthleteService {
   private apiUrl = 'http://localhost:8000/athletes/';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAthletes(): Observable<Athlete[]> {
     return this.http.get<Athlete[]>(this.apiUrl);
+  }
+
+  getAthlete(id: number): Observable<Athlete> {
+    return this.http.get<Athlete>(this.apiUrl + id);
   }
 
   addAthlete(athlete: Athlete): Observable<Athlete> {

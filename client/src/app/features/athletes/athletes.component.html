@@ -1,4 +1,3 @@
-<h2>Athletes</h2>
 
 <!-- Athlete Form -->
 <form (ngSubmit)="addAthlete()" #athleteForm="ngForm">
@@ -8,9 +7,12 @@
   <button type="submit">Add Athlete</button>
 </form>
 
+<h2>Athletes</h2>
 
 <ul>
   <li *ngFor="let athlete of athletes">
-    {{ athlete.id }} - {{ athlete.name }} ({{ athlete.sport }}, Age: {{ athlete.age }})
+    <a [routerLink]="['/athlete', athlete.id]" style="cursor:pointer; text-decoration:none; color:inherit;">
+      {{ athlete.id }} - {{ athlete.name }} ({{ athlete.sport }}, Age: {{ athlete.age }})
+    </a>
   </li>
-</ul>  
+</ul>

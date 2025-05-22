@@ -24,4 +24,8 @@ export class VideoService {
   UploadVideo(formData: FormData): Observable<Video> {
     return this.http.post<Video>(this.apiUrl+'upload', formData);
   }
+
+  getVideosByAthlete(athlete_id :number): Observable<Video[]> {
+    return this.http.get<Video[]>(this.apiUrl+"by-athlete/"+athlete_id) ;
+  }
 }

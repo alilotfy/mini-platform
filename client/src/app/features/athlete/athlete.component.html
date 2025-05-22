@@ -1,0 +1,24 @@
+<div class="athlete-details">
+    <h2>{{ athlete?.name }} (ID: {{ athlete?.id }})</h2>
+    <p><strong>Sport:</strong> {{ athlete?.sport }}</p>
+    <p><strong>Age:</strong> {{ athlete?.age }}</p>
+  </div>
+  
+  <div class="metrics-section">
+    <h3>Metrics</h3>
+    <ul>
+      <li *ngFor="let metric of metrics">
+        {{ metric.metric_type }}: {{ metric.metric_value }} ({{ metric.timestamp }})
+      </li>
+    </ul>
+  </div>
+  
+  <div class="videos-section">
+    <h3>Videos</h3>
+    <ul>
+      <li *ngFor="let video of videos" class="video-item">
+        {{ video.filename }}
+      </li>
+    </ul>
+  </div>
+  

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterModule } from '@angular/router';
 import { Athlete, AthleteService } from 'src/app/services/athlete.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { Athlete, AthleteService } from 'src/app/services/athlete.service';
   templateUrl: './athletes.component.html',
   styleUrls: ['./athletes.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class AthletesComponent implements OnInit {
   athletes: Athlete[] = [];
