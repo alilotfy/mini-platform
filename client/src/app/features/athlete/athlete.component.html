@@ -4,11 +4,20 @@
     <p><strong>Age:</strong> {{ athlete?.age }}</p>
   </div>
   
+  <div class="summary-section">
+    <h3>Performance Summary</h3>
+    <ul>
+      <li *ngFor="let metricType of getMetricKeys(summary)">
+        <strong>{{ metricType }}:</strong> {{ summary[metricType] }}
+      </li>
+    </ul>
+  </div>
+
   <div class="metrics-section">
-    <h3>Metrics</h3>
+    <h3>All Metrics</h3>
     <ul>
       <li *ngFor="let metric of metrics">
-        {{ metric.metric_type }}: {{ metric.metric_value }} ({{ metric.timestamp }})
+        #{{ metric.id }} {{ metric.metric_type }}: {{ metric.metric_value }} 
       </li>
     </ul>
   </div>

@@ -24,6 +24,10 @@ export class AthleteService {
     return this.http.get<Athlete>(this.apiUrl + id);
   }
 
+  getAthletePerformanceSummary(id: number): Observable<{ [key: string]: number } > {
+    return this.http.get<{ [key: string]: number } >(this.apiUrl + id+'/performance-summary');
+  }
+
   addAthlete(athlete: Athlete): Observable<Athlete> {
     return this.http.post<Athlete>(this.apiUrl, athlete);
   }

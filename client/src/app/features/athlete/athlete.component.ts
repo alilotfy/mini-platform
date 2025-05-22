@@ -1,4 +1,3 @@
-// athlete.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -16,6 +15,7 @@ export class AthleteComponent implements OnInit {
     athlete?: Athlete;
     metrics: Metric[] = [];
     videos: Video[] = [];
+    summary: { [key: string]: number } = {};
 
     athleteId!: number;
 
@@ -38,5 +38,12 @@ export class AthleteComponent implements OnInit {
             m => { this.metrics = m; });
         this.athleteVideoService.getVideosByAthlete(this.athleteId).subscribe(
             v => this.videos = v);
+        this.athleteService.getAthletePerformanceSummary(this.athleteId).subscribe(
+            v => this.summary = v);
+
+    }
+    
+    getMetricKeys(summaryObj: { [key: string]: number }): string[] {
+        return Object.keys(summaryObj);
     }
 }

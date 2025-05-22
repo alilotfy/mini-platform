@@ -30,7 +30,7 @@ export class MetricService {
     return this.http.post<Metric>(this.apiUrl, metric);
   }
   getMetricsByAthlete(athleteId: number): Observable<Metric[]> {
-    return this.http.get<Metric[]>(this.apiUrl + "?athlete_id=" + athleteId);
+    return this.http.get<Metric[]>(this.apiUrl + "by-athlete-video/?athlete_id=" + athleteId);
   }
 
   getMetricsByVideo(video_id: number): Observable<Metric[]> {

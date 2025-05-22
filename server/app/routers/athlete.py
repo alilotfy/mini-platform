@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from app.models import Athlete, AthleteVideoTag, Video
+from app.models import Athlete, AthleteVideoTag, AthleteVideoMetric
 from app.schemas.athlete import AthleteCreate, AthleteRead
 from app.schemas.nested_athlete import NestedAthleteRead
-
+from collections import defaultdict
+from typing import Dict
 from app.database import get_db
 from sqlalchemy.orm import joinedload
 
@@ -77,3 +78,21 @@ def read_athletes_in_video(
         .all()
     )
     return athletes
+
+@router.get("/{athlete_id}/performance-summary")
+def athlete_performance_summary(athlete_id: int, db: Session = Depends(get_db)) -> Dict[str, float]:
+    metrics = db.query(AthleteVideoMetric).filter(AthleteVideoMetric.athlete_id == athlete_id).all()
+
+    if not metrics:
+        raise HTTPException(status_code=404, detail="No metrics found for this athlete")
+
+    sums = defaultdict(float)
+    counts = defaultdict(int)
+
+    for metric in metrics:
+        sums[metric.metric_type] += float(metric.metric_value)
+        counts[metric.metric_type] += 1
+
+    averages = {metric_type: sums[metric_type] / counts[metric_type] for metric_type in sums}
+
+    return averages
