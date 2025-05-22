@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Video, VideoService } from 'src/app/services/video.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterModule } from '@angular/router';
+import { Video, VideoService } from 'src/app/services/video.service';
 
 @Component({
   selector: 'app-videos',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './videos.component.html',
   styleUrl: './videos.component.scss'
 })

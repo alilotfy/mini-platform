@@ -1,22 +1,17 @@
 <label for="videoUpload" class="upload-button">
     Click to Upload Video
-  </label>
-  <input
-    type="file"
-    id="videoUpload"
-    accept="video/*"
-    (change)="onVideoSelected($event)"
-    hidden
-  />
+</label>
+<input type="file" id="videoUpload" accept="video/*" (change)="onVideoSelected($event)" hidden />
 
 <h2>Videos</h2>
 <ul class="video-list">
-  <li *ngFor="let video of videos" class="video-item">
-    <div class="video-content">
-      <h3 class="video-title">{{ video.filename }}</h3>
-      <span class="video-status">Status: {{ video.status }}</span>
-    </div>
-  </li>
+    <li *ngFor="let video of videos" class="video-item">
+        <div class="video-content">
+            <a [routerLink]="['/video', video.id]" class="video-link">
+                <h3 class="video-title">{{ video.filename }}</h3>
+                <span class="video-status">Status: {{ video.status }}</span>
+            </a>
+
+        </div>
+    </li>
 </ul>
-
-

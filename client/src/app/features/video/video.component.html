@@ -1,0 +1,56 @@
+<h2>Video #{{ videoId }} {{ video.filename }}</h2>
+<span class="video-status">Status: {{ video.status }}</span>
+<div class="video-content" *ngIf="video">
+  <video  controls muted preload="metadata">
+    <source src="http://localhost:8000/videos/stream/{{video.filename}}" type="video/mp4" />
+  </video>
+</div>
+
+<section>
+  <h3>Athletes in Video</h3>
+  <ul class="tagged-athletes">
+    <li *ngFor="let athlete of athletes">
+      {{ athlete.name }} ({{ athlete.sport }})
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h3>Metrics</h3>
+  <ul class="metric-list">
+    <li *ngFor="let metric of metrics">
+      {{ metric.metric_type }} - {{ metric.metric_value }} (Athlete: {{ metric.athlete_id }})
+    </li>
+  </ul>
+</section>
+
+<section class="forms">
+  <div class="form-block">
+    <h4>Tag Athlete</h4>
+    <form (ngSubmit)="submitTag()" [formGroup]="tagForm">
+      <select formControlName="athlete_id">
+        <option value="" disabled selected>Select an athlete</option>
+        <option *ngFor="let athlete of allAthletes" [value]="athlete.id">
+          {{ athlete.name }} ,Id: {{ athlete.id }}
+
+        </option>
+      </select>
+      <button type="submit">Tag</button>
+    </form>
+  </div>
+
+  <div class="form-block">
+    <h4>Add Metric</h4>
+    <form (ngSubmit)="submitMetric()" [formGroup]="metricForm">
+      <select formControlName="athlete_id">
+        <option value="" disabled selected>Select an athlete</option>
+        <option *ngFor="let athlete of allAthletes" [value]="athlete.id">
+          {{ athlete.name }} ,Id: {{ athlete.id }}
+        </option>
+      </select>
+      <input formControlName="metric_type" placeholder="Metric Type" />
+      <input formControlName="metric_value" placeholder="Metric Value" />
+      <button type="submit">Add</button>
+    </form>
+  </div>
+</section>
