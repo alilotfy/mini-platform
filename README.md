@@ -1,15 +1,31 @@
-# mini-platform
+# Mini Platform
 
-Reuirements
-  Docker and Docker Compose
+## Requirements
 
-How to run
-  clone the repo
-  navigate to the repo 
-  docker compose build
-  docker compose up
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
-Access frontend : http://localhost:4200
-Access backend: http://localhost:8000/docs#/
+## How to Run
 
-Note stop postgresql if it runs in you machine
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/mini-platform.git
+   cd mini-platform
+   ```
+
+2. Build the Docker containers:
+   ```bash
+   docker compose build
+   ```
+
+3. Start the application:
+   ```bash
+   docker compose up
+   ```
+
+> ⚠️ **Note:** Stop any running PostgreSQL instance on your local machine before starting the app to avoid port conflicts.
+
+## Access
+
+- **Frontend:** [http://localhost:4200](http://localhost:4200)
+- **Backend (API docs):** [http://localhost:8000/docs](http://localhost:8000/docs)
