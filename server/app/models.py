@@ -25,6 +25,7 @@ class Video(Base):
     status = Column(String) 
 
     video_tags = relationship("AthleteVideoTag", back_populates="video")
+    athlete_video_metrics = relationship("AthleteVideoMetric", back_populates="video")
 
 
 class AthleteVideoTag(Base):
@@ -50,3 +51,4 @@ class AthleteVideoMetric(Base):
     metric_type = Column(String, nullable=False)
     metric_value = Column(Float, nullable=False)
     timestamp = Column(Float, nullable=False)
+    video = relationship("Video", back_populates="athlete_video_metrics")

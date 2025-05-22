@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Video } from './video.service';
 
 export interface Metric {
   id: number;
@@ -10,6 +11,7 @@ export interface Metric {
   metric_type: string;
   metric_value: number;
   timestamp: number;
+  video: Video
 }
 
 

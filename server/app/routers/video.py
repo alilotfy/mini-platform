@@ -8,6 +8,7 @@ from app.database import get_db
 from app.models import AthleteVideoTag, Video
 import time
 from fastapi.responses import FileResponse
+from fastapi.responses import StreamingResponse
 
 router = APIRouter(prefix="/videos", tags=["Videos"])
 
@@ -16,9 +17,7 @@ UPLOAD_DIR = "./video_files"
 @router.post("/upload")
 def upload_video(background_tasks: BackgroundTasks, file: UploadFile = File(...), db: Session = Depends(get_db)):
 
-    if file.content_type not in ["video/mp4", "video/quicktime"]:
-        raise HTTPException(status_code=400, detail="Only mp4 and mov files allowed")
-    
+    validate_video_file(file)
     existing = db.query(Video).filter_by(filename=file.filename).first()
     if existing:
         raise HTTPException(status_code=400, detail="A video with this filename already exists")
@@ -50,6 +49,18 @@ def upload_video(background_tasks: BackgroundTasks, file: UploadFile = File(...)
         "duration": video.duration,
     }
 
+ALLOWED_CONTENT_TYPES = ["video/mp4", "video/quicktime"]
+ALLOWED_EXTENSIONS = [".mp4", ".mov"]
+
+def validate_video_file(file: UploadFile):
+    ext = os.path.splitext(file.filename)[1].lower()
+    
+    if file.content_type not in ALLOWED_CONTENT_TYPES or ext not in ALLOWED_EXTENSIONS:
+        raise HTTPException(
+            status_code=400,
+            detail="Only .mp4 and .mov files with correct content type are allowed"
+        )
+    
 @router.get("/", response_model=list[VideoRead])
 def read_videos(db: Session = Depends(get_db)):
     videos = db.query(Video).options(
@@ -101,7 +112,20 @@ def simulate_video_processing(video_id: int, db: Session):
 @router.get("/stream/{filename}")
 def stream_video(filename: str):
     file_path = os.path.join(UPLOAD_DIR, filename)
-    return FileResponse(path=file_path, media_type="video/mp4")
+
+    if not os.path.isfile(file_path):
+        raise HTTPException(status_code=404, detail="Video not found")
+
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext == ".mp4":
+        media_type = "video/mp4"
+    elif ext == ".mov":
+        media_type = "video/quicktime"
+    else:
+        raise HTTPException(status_code=415, detail="Unsupported video format")
+
+    return FileResponse(path=file_path, media_type=media_type)
+
 
 
 @router.get("/{video_id}", response_model=NestedVideoRead)
@@ -116,4 +140,3 @@ def get_video_info(video_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Video not found")
 
     return video
-   

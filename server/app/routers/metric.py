@@ -1,10 +1,12 @@
 # app/routers/metric.py
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from app.schemas.video import NestedVideoRead
+from sqlalchemy.orm import Session, joinedload
 from app.database import get_db
-from app.models import AthleteVideoMetric
+from app.models import AthleteVideoMetric,Video
 from app.schemas.metric import MetricCreate, MetricUpdate, MetricRead
+from typing import Optional
 
 router = APIRouter(prefix="/metrics", tags=["Metrics"])
 
@@ -16,7 +18,7 @@ def create_metric(metric: MetricCreate, db: Session = Depends(get_db)):
     db.refresh(db_metric)
     return db_metric
 
-from typing import Optional
+
 
 @router.get("/by-athlete-video/", response_model=list[MetricRead])
 def get_metrics(
@@ -24,12 +26,17 @@ def get_metrics(
     video_id: Optional[int] = None,
     db: Session = Depends(get_db)
 ):
-    query = db.query(AthleteVideoMetric)
+
+    query = db.query(AthleteVideoMetric).options(joinedload(AthleteVideoMetric.video))
+
     if athlete_id is not None:
         query = query.filter(AthleteVideoMetric.athlete_id == athlete_id)
     if video_id is not None:
         query = query.filter(AthleteVideoMetric.video_id == video_id)
-    return query.all()
+
+    results = query.all()
+
+    return [MetricRead.from_orm(metric) for metric in results]
 
 @router.put("/{metric_id}", response_model=MetricRead)
 def update_metric(metric_id: int, metric: MetricUpdate, db: Session = Depends(get_db)):

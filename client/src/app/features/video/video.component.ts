@@ -68,7 +68,7 @@ export class VideoComponent implements OnInit {
   }
 
   loadAllAthletes() {
-    this.athleteService.getAthletes().subscribe(data => {
+    this.athleteService.getAthletesInVideo(this.videoId).subscribe(data => {
       this.allAthletes = data;
     });
   }

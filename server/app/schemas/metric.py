@@ -1,7 +1,7 @@
 
 from pydantic import BaseModel
 from typing import Optional
-from datetime import datetime
+from app.schemas.video import NestedVideoRead
 
 class MetricBase(BaseModel):
     athlete_id: int
@@ -20,6 +20,8 @@ class MetricUpdate(BaseModel):
 
 class MetricRead(MetricBase):
     id: int
+    video: NestedVideoRead 
 
     class Config:
         orm_mode = True
+        from_attributes=True
