@@ -1,6 +1,27 @@
+<label for="videoUpload" class="upload-button">
+    Click to Upload Video
+  </label>
+  <input
+    type="file"
+    id="videoUpload"
+    accept="video/*"
+    (change)="onVideoSelected($event)"
+    hidden
+  />
+  
 <h2>Videos</h2>
 <ul>
-  <li *ngFor="let video of videos">
-    {{ video.id }} - {{ video.path }} ({{ video.status }}, Age: {{ video.filename }})
-  </li>
-</ul>  
+    <li *ngFor="let video of videos">
+        <div  class="video-item">
+            <h3>{{ video.filename }}</h3>
+            <h5>Status: {{ video.status }}</h5>
+            <video width="320" height="240"  controls muted preload="metadata" 
+            
+            >
+                <source src="http://localhost:8000/videos/{{video.filename}}"  type="video/mp4" />
+            </video>
+        
+        </div>
+    </li>
+</ul>
+

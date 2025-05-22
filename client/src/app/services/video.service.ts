@@ -21,4 +21,9 @@ export class VideoService {
     console.log(this.apiUrl)
     return this.http.get<Video[]>(this.apiUrl);
   }
+
+  UploadVideo(formData: FormData): Observable<Video> {
+    console.log(this.apiUrl)
+    return this.http.post<Video>(this.apiUrl+'upload', formData);
+  }
 }

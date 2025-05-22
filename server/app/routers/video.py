@@ -7,11 +7,11 @@ from datetime import datetime
 from app.database import get_db
 from app.models import AthleteVideoTag, Video
 import time
+from fastapi.responses import FileResponse
 
 router = APIRouter(prefix="/videos", tags=["Videos"])
 
 UPLOAD_DIR = "./video_files"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/upload")
 def upload_video(background_tasks: BackgroundTasks, file: UploadFile = File(...), db: Session = Depends(get_db)):
@@ -84,3 +84,8 @@ def simulate_video_processing(video_id: int, db: Session):
     if video:
         video.status = "Complete"
         db.commit()
+
+@router.get("/{filename}")
+def get_video(filename: str):
+    file_path = os.path.join(UPLOAD_DIR, filename)
+    return FileResponse(path=file_path, media_type="video/mp4")

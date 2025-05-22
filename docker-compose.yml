@@ -8,6 +8,7 @@ services:
       - "8000:8000"
     volumes:
       - ./server:/app
+      - video_files:/app/video_files
     depends_on:
       - db
     environment:
@@ -41,3 +42,10 @@ services:
 
 volumes:
   pgdata:
+  video_files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./video_files
+  # sudo chown -R $USER:$USER client
