@@ -7,6 +7,7 @@ export interface Video {
   path: string;
   status: string;
   filename: string;
+  upload_date?: Date;
 }
 
 @Injectable({

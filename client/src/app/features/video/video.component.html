@@ -1,7 +1,18 @@
-<h2>Video #{{ videoId }} {{ video.filename }}</h2>
-<span class="video-status">Status: {{ video.status }}</span>
+
+<div class="video-header">
+  <h2>Video #{{ videoId }} {{ video.filename }}</h2>
+<span class="video-status"
+  [ngClass]="{'status-completed': video.status !='Processing', 'status-pending': video.status != 'Complete'}">
+  Status: {{ video.status }}
+</span>
+<span class="upload-time">
+  Uploaded: {{ video.upload_date | date:'medium' }}
+</span>
+</div>
+
+
 <div class="video-content" *ngIf="video">
-  <video  controls muted preload="metadata">
+  <video controls muted preload="metadata">
     <source src="http://localhost:8000/videos/stream/{{video.filename}}" type="video/mp4" />
     <source src="http://localhost:8000/videos/stream/{{video.filename}}" type="video/quicktime" />
   </video>
@@ -12,7 +23,7 @@
       <h3>Athletes in Video</h3>
       <ul class="tagged-athletes">
         <li *ngFor="let athlete of athletes">
-          #{{ athlete.id }}  {{ athlete.name }} ({{ athlete.sport }})
+          #{{ athlete.id }} {{ athlete.name }} ({{ athlete.sport }})
         </li>
       </ul>
     </div>
