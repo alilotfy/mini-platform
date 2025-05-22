@@ -1,0 +1,7 @@
+<h2>Metrics</h2>
+<ul>
+  <li *ngFor="let metric of metrics">
+    {{ metric.id }} - {{ metric.athlete_id }} ({{ metric.video_id }}, MetricType: {{ metric.metric_type }}, {{metric.metric_value}}, {{metric.timestamp}})
+  </li>
+</ul>  
+
