@@ -8,20 +8,15 @@
     (change)="onVideoSelected($event)"
     hidden
   />
-  
+
 <h2>Videos</h2>
-<ul>
-    <li *ngFor="let video of videos">
-        <div  class="video-item">
-            <h3>{{ video.filename }}</h3>
-            <h5>Status: {{ video.status }}</h5>
-            <video width="320" height="240"  controls muted preload="metadata" 
-            
-            >
-                <source src="http://localhost:8000/videos/{{video.filename}}"  type="video/mp4" />
-            </video>
-        
-        </div>
-    </li>
+<ul class="video-list">
+  <li *ngFor="let video of videos" class="video-item">
+    <div class="video-content">
+      <h3 class="video-title">{{ video.filename }}</h3>
+      <span class="video-status">Status: {{ video.status }}</span>
+    </div>
+  </li>
 </ul>
+
 

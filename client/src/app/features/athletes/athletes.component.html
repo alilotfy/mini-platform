@@ -7,12 +7,13 @@
   <button type="submit">Add Athlete</button>
 </form>
 
-<h2>Athletes</h2>
 
-<ul>
-  <li *ngFor="let athlete of athletes">
-    <a [routerLink]="['/athlete', athlete.id]" style="cursor:pointer; text-decoration:none; color:inherit;">
-      {{ athlete.id }} - {{ athlete.name }} ({{ athlete.sport }}, Age: {{ athlete.age }})
+<h2>Athletes</h2>
+<ul class="athlete-list">
+  <li *ngFor="let athlete of athletes" class="athlete-item">
+    <a [routerLink]="['/athlete', athlete.id]" class="athlete-link">
+      <h3>{{ athlete.name }}</h3>
+      <p>ID: {{ athlete.id }} | Sport: {{ athlete.sport }} | Age: {{ athlete.age }}</p>
     </a>
   </li>
 </ul>

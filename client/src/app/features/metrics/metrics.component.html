@@ -1,6 +1,4 @@
-<h2>Metrics</h2>
 
-<!-- Metric creation form -->
 <form (ngSubmit)="addMetric()" #metricForm="ngForm">
 
   <label for="athlete">Athlete:</label>
@@ -28,10 +26,15 @@
 
   <button type="submit">Add Metric</button>
 </form>
-
-<!-- Existing metrics list -->
-<ul>
-  <li *ngFor="let metric of metrics">
-    {{ metric.id }} - Athlete: {{ metric.athlete_id }}, Video: {{ metric.video_id }}, MetricType: {{ metric.metric_type }}, Value: {{ metric.metric_value }}, Timestamp: {{ metric.timestamp }}
+<h2>Metrics</h2>
+<ul class="metric-list">
+  <li *ngFor="let metric of metrics" class="metric-item">
+    <div class="metric-content">
+      <h4>{{ metric.metric_type }} (Value: {{ metric.metric_value }})</h4>
+      <p>
+        ID: {{ metric.id }} | Athlete: {{ metric.athlete_id }} | Video: {{ metric.video_id }}<br>
+        Timestamp: {{ metric.timestamp }}
+      </p>
+    </div>
   </li>
 </ul>
