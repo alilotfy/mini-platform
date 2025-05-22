@@ -98,7 +98,22 @@ def simulate_video_processing(video_id: int, db: Session):
         video.status = "Complete"
         db.commit()
 
-@router.get("/{filename}")
-def get_video(filename: str):
+@router.get("/stream/{filename}")
+def stream_video(filename: str):
     file_path = os.path.join(UPLOAD_DIR, filename)
     return FileResponse(path=file_path, media_type="video/mp4")
+
+
+@router.get("/{video_id}", response_model=NestedVideoRead)
+def get_video_info(video_id: int, db: Session = Depends(get_db)):
+    video = (
+        db.query(Video)
+        .filter(Video.id == video_id)
+        .first()
+    )
+
+    if not video:
+        raise HTTPException(status_code=404, detail="Video not found")
+
+    return video
+   

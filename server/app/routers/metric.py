@@ -50,3 +50,11 @@ def delete_metric(metric_id: int, db: Session = Depends(get_db)):
     db.delete(db_metric)
     db.commit()
     return {"message": "Metric deleted"}
+
+@router.get("/by-video/{video_id}", response_model=list[MetricRead])
+def get_metrics_by_video(
+    video_id: int,
+    db: Session = Depends(get_db)):
+
+    metrics = db.query(AthleteVideoMetric).filter(AthleteVideoMetric.video_id == video_id).all()
+    return metrics

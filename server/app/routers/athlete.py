@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from app.models import Athlete, AthleteVideoTag
+from app.models import Athlete, AthleteVideoTag, Video
 from app.schemas.athlete import AthleteCreate, AthleteRead
+from app.schemas.nested_athlete import NestedAthleteRead
+
 from app.database import get_db
 from sqlalchemy.orm import joinedload
 
@@ -61,3 +63,17 @@ def update_athlete(athlete_id: int, updated: AthleteCreate, db: Session = Depend
     db.commit()
     db.refresh(athlete)
     return athlete
+
+
+@router.get("/by-video/{video_id}", response_model=list[NestedAthleteRead])
+def read_athletes_in_video(
+    video_id: int,
+    db: Session = Depends(get_db)
+):
+    athletes = (
+        db.query(Athlete)
+        .join(AthleteVideoTag, Athlete.id == AthleteVideoTag.athlete_id)
+        .filter(AthleteVideoTag.video_id == video_id)
+        .all()
+    )
+    return athletes
