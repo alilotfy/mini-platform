@@ -19,4 +19,8 @@ export class AthleteService {
   getAthletes(): Observable<Athlete[]> {
     return this.http.get<Athlete[]>(this.apiUrl);
   }
+
+  addAthlete(athlete: Athlete): Observable<Athlete> {
+    return this.http.post<Athlete>(this.apiUrl, athlete);
+  }
 }

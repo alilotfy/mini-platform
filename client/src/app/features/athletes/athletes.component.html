@@ -1,4 +1,14 @@
 <h2>Athletes</h2>
+
+<!-- Athlete Form -->
+<form (ngSubmit)="addAthlete()" #athleteForm="ngForm">
+  <input type="text" name="name" [(ngModel)]="newAthlete.name" placeholder="Name" required />
+  <input type="text" name="sport" [(ngModel)]="newAthlete.sport" placeholder="Sport" required />
+  <input type="number" name="age" [(ngModel)]="newAthlete.age" placeholder="Age" required />
+  <button type="submit">Add Athlete</button>
+</form>
+
+
 <ul>
   <li *ngFor="let athlete of athletes">
     {{ athlete.id }} - {{ athlete.name }} ({{ athlete.sport }}, Age: {{ athlete.age }})

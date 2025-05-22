@@ -18,12 +18,10 @@ export class VideoService {
   constructor(private http: HttpClient) {}
 
   getVideos(): Observable<Video[]> {
-    console.log(this.apiUrl)
     return this.http.get<Video[]>(this.apiUrl);
   }
 
   UploadVideo(formData: FormData): Observable<Video> {
-    console.log(this.apiUrl)
     return this.http.post<Video>(this.apiUrl+'upload', formData);
   }
 }

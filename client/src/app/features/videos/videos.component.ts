@@ -15,6 +15,9 @@ export class VideosComponent {
   constructor(private videoService: VideoService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+this.loadVideos()
+  }
+  loadVideos(){
     this.videoService.getVideos().subscribe(data => {
       this.videos = data;
     });
@@ -29,11 +32,13 @@ export class VideosComponent {
 
       this.videoService.UploadVideo(formData).subscribe({
         next: (res) => {
-          console.log('Upload success:', res);
-          this.snackBar.open('Video uploaded! Reload to View videos', 'Close', {
-            duration: 3000, // 3 seconds
+          this.snackBar.open('Video uploaded! ', 'Close', {
+            duration: 3000,
           });
-        }, error: (err) => console.error('Upload error:', err),
+          this.loadVideos()
+        }, error: (err) => this.snackBar.open('Error Uploading video:' +err, 'Close', {
+          duration: 3000,
+        }),
       });
     }
   }
