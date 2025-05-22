@@ -26,5 +26,18 @@ services:
     ports:
       - "5432:5432"
 
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: mini-platform-client
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - server
+
 volumes:
   pgdata:
