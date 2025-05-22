@@ -1,7 +1,37 @@
 <h2>Metrics</h2>
+
+<!-- Metric creation form -->
+<form (ngSubmit)="addMetric()" #metricForm="ngForm">
+
+  <label for="athlete">Athlete:</label>
+  <select name="athlete" [(ngModel)]="newMetric.athlete_id" required>
+    <option *ngFor="let athlete of athletes" [value]="athlete.id">
+      {{ athlete.name }} (ID: {{ athlete.id }})
+    </option>
+  </select>
+
+  <label for="video">Video:</label>
+  <select name="video" [(ngModel)]="newMetric.video_id" required>
+    <option *ngFor="let video of videos" [value]="video.id">
+      {{ video.filename }} (ID: {{ video.id }})
+    </option>
+  </select>
+
+  <label for="metric_type">Metric Type:</label>
+  <input type="text" name="metric_type" [(ngModel)]="newMetric.metric_type" required />
+
+  <label for="metric_value">Metric Value:</label>
+  <input type="number" name="metric_value" [(ngModel)]="newMetric.metric_value" required />
+
+  <label for="timestamp">Timestamp:</label>
+  <input type="number" name="timestamp" [(ngModel)]="newMetric.timestamp" required />
+
+  <button type="submit">Add Metric</button>
+</form>
+
+<!-- Existing metrics list -->
 <ul>
   <li *ngFor="let metric of metrics">
-    {{ metric.id }} - {{ metric.athlete_id }} ({{ metric.video_id }}, MetricType: {{ metric.metric_type }}, {{metric.metric_value}}, {{metric.timestamp}})
+    {{ metric.id }} - Athlete: {{ metric.athlete_id }}, Video: {{ metric.video_id }}, MetricType: {{ metric.metric_type }}, Value: {{ metric.metric_value }}, Timestamp: {{ metric.timestamp }}
   </li>
-</ul>  
-
+</ul>

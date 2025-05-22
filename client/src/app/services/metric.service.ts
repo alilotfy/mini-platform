@@ -24,4 +24,9 @@ export class MetricService {
   getMetrics(): Observable<Metric[]> {
     return this.http.get<Metric[]>(this.apiUrl);
   }
+
+  addMetric(metric: Metric): Observable<Metric> {
+
+      return this.http.post<Metric>("http://localhost:8000/metrics/", metric);
+    }
 }
