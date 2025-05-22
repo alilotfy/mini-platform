@@ -1,0 +1,21 @@
+<div class="layout">
+  <header class="header">
+    <h1>Mini Platform</h1>
+  </header>
+
+  <div class="body">
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a routerLink="/athletes" routerLinkActive="active">Athletes</a></li>
+          <li><a routerLink="/videos" routerLinkActive="active">Videos</a></li>
+          <li><a routerLink="/metrics" routerLinkActive="active">Metrics</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
