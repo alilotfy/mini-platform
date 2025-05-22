@@ -1,7 +1,7 @@
 import os
 import subprocess
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, BackgroundTasks
-from app.schemas.video import VideoRead
+from app.schemas.video import NestedVideoRead, VideoRead
 from sqlalchemy.orm import Session, joinedload
 from datetime import datetime
 from app.database import get_db
@@ -62,6 +62,19 @@ def read_videos(db: Session = Depends(get_db)):
 
     return videos
 
+@router.get("/by-athlete/{athlete_id}", response_model=list[NestedVideoRead])
+def read_videos(
+    athlete_id: int,
+    db: Session = Depends(get_db)
+):
+    videos = (
+        db.query(Video)
+        .join(AthleteVideoTag, Video.id == AthleteVideoTag.video_id)
+        .options(joinedload(Video.video_tags)) 
+        .filter(AthleteVideoTag.athlete_id == athlete_id)
+        .all()
+    )
+    return videos
 
 def get_video_duration(path: str) -> float | None:
     cmd = [
