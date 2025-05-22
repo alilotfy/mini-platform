@@ -1,0 +1,2 @@
+This files is only here to ensure the contained directory exists.
+Necessary for the docker volume that will have the videos
