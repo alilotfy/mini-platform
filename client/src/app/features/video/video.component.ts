@@ -38,7 +38,7 @@ export class VideoComponent implements OnInit {
     this.loadAllAthletes();
 
     this.metricForm = this.fb.group({
-      athlete_id: 0,
+      athlete_id: [''], 
       metric_type: [''],
       metric_value: 0,
       timestamp: 0
